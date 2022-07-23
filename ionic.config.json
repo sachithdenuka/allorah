@@ -1,5 +1,7 @@
 {
   "name": "allorah_co",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

@@ -1,0 +1,55 @@
+<ion-header *ngIf="isEdit">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss.emit(true)">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="updateItem()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-card>
+  <ion-card-header>
+    <ion-list>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <picture>
+            <img class="image_upload" *ngIf="isEdit && item" src={{item.imageUrl}} />
+            <img class="image_upload" *ngIf="image?.base64String" [src]="getBase64Image()" />
+          </picture>
+        </ion-thumbnail>
+        <!-- <ion-label>
+          <p>Button on right</p>
+        </ion-label> -->
+        <ion-button fill="outline" color="allorah" slot="start" (click)="photoPicker()">{{ image ? 'Change Image' :
+          'Upload Image' }}</ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Description</ion-label>
+        <ion-input clearInput placeholder="Enter Item Description" [(ngModel)]="item.description"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Category</ion-label>
+        <ion-select interface="action-sheet" placeholder="--Select--" [interfaceOptions]="{cssClass: 'custom-select'}"
+          [(ngModel)]="item.category" *ngIf="categories.length > 0">
+          <ion-select-option *ngFor="let category of categories" [value]="category.description">{{ category.description
+            }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Availability</ion-label>
+        <ion-select interface="action-sheet" placeholder="--Select--" [interfaceOptions]="{cssClass: 'custom-select'}"
+          [(ngModel)]="item.availability">
+          <ion-select-option *ngFor="let aval of availability" [value]="aval">{{ aval }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="!isEdit">
+        <ion-buttons slot="end">
+          <ion-button color="allorah" fill="solid" (click)="addNewItem()"> Add Item </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+  </ion-card-header>
+</ion-card>
