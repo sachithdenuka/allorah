@@ -16,9 +16,14 @@ export class Tab2Page {
   constructor(
     private avatarService: AvatarService,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private authService: AuthenticationService
   ) {
     this.getCategories();
+  }
+
+  logOut() {
+    this.authService.signOut();
   }
 
   getCategories() {

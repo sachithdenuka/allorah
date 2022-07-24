@@ -19,16 +19,10 @@ export class AuthenticationService {
     public ngZone: NgZone
   ) {
     this.ngFireAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user'));
-      } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
-      }
+      this.setLocalUserData(user)
     });
   }
+
   // Returns true when user is looged in
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -38,6 +32,16 @@ export class AuthenticationService {
   get isEmailVerified(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return user.emailVerified !== false ? true : false;
+  }
+  setLocalUserData(user) {
+    if (user) {
+      this.userData = user;
+      localStorage.setItem('user', JSON.stringify(this.userData));
+      JSON.parse(localStorage.getItem('user'));
+    } else {
+      localStorage.setItem('user', null);
+      JSON.parse(localStorage.getItem('user'));
+    }
   }
   // Login in with email/password
   signIn(email, password) {

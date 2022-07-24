@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Sign in User</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Welcome Allorah</ion-title>
+    </ion-toolbar>
+  </ion-header>
 <ion-content>
   <form>
     <ion-item lines="full">
@@ -19,14 +19,6 @@
     <ion-row>
       <ion-col>
         <ion-button type="submit" (click)="logIn(email, password)" expand="block">Login</ion-button>
-      </ion-col>
-    </ion-row>
-    <span class="divider line one-line">or</span>
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="danger" (click)="authService.googleAuth()" expand="block">
-          Login with Google
-        </ion-button>
       </ion-col>
     </ion-row>
   </form>

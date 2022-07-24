@@ -1,10 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output, PlatformRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  PlatformRef,
+} from '@angular/core';
 import {
   Camera,
   CameraResultType,
   CameraSource,
   Photo,
 } from '@capacitor/camera';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { AvatarService } from '../service/avatar.service';
 import { Item } from '../shared/models';
@@ -39,9 +47,12 @@ export class CreateItemPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.subscription = this.platform.backButton.subscribeWithPriority(9999, () => {
-      // do nothing
-    });
+    this.subscription = this.platform.backButton.subscribeWithPriority(
+      9999,
+      () => {
+        // do nothing
+      }
+    );
   }
 
   ionViewWillLeave() {
@@ -69,6 +80,35 @@ export class CreateItemPage implements OnInit {
       source: CameraSource.Photos,
     });
   }
+
+  async downloadImage() {
+    // retrieve the image
+    const response = await fetch(this.item.imageUrl);
+    // convert to a Blob
+    const blob = await response.blob();
+    // convert to base64 data, which the Filesystem plugin requires
+    const base64Data = (await this.convertBlobToBase64(blob)) as string;
+
+    const savedFile = await Filesystem.writeFile({
+      path: this.item.id,
+      data: base64Data,
+      directory: Directory.Data,
+    });
+
+    if (savedFile) {
+      console.log('Saved');
+    }
+  }
+
+  convertBlobToBase64 = (blob: Blob) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
 
   async addNewItem() {
     if (this.image) {

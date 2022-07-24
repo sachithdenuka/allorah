@@ -1,19 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title class="ion-text-center">Add Categories</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-input clearInput placeholder="Enter new category" [(ngModel)]="category"></ion-input>
-      <ion-button color="success" fill="outline" (click)="addNewCategory()">Add</ion-button>
-    </ion-card-content>
-  </ion-card>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Categories</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Add Categories</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-input clearInput placeholder="Enter new category" [(ngModel)]="category"></ion-input>
+              </ion-item>
+              <ion-row>
+                <ion-col>
+                <ion-button color="success" expand="block" (click)="addNewCategory()">Add</ion-button>
+              </ion-col>
+              </ion-row>
+            </ion-list>
+            <ion-item-divider></ion-item-divider>
+            <ion-progress-bar type="indeterminate" *ngIf="categories.length === 0"></ion-progress-bar>
 
-  <ion-progress-bar type="indeterminate" *ngIf="categories.length === 0"></ion-progress-bar>
+            <ion-list *ngFor="let category of categories">
+              <ion-item>
+                <ion-label>{{ category.description }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-accordion>
 
-  <ion-list *ngFor="let category of categories">
-    <ion-item>
-      <ion-label>{{ category.description }}</ion-label>
-    </ion-item>
-  </ion-list>
+
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Account Settings</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-button expand="block" (click)="logOut()">Logout</ion-button>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 </ion-content>

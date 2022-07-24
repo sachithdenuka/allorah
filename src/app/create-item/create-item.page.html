@@ -10,19 +10,21 @@
 </ion-header>
 <ion-card>
   <ion-card-header>
+    <ion-card-title class="ion-text-center">{{isEdit ? 'Update' : 'Add'}} Item</ion-card-title>
     <ion-list>
       <ion-item>
         <ion-thumbnail slot="start">
           <picture>
-            <img class="image_upload" *ngIf="isEdit && item" src={{item.imageUrl}} />
+            <img class="image_upload" *ngIf="!image && isEdit && item" src={{item.imageUrl}} />
             <img class="image_upload" *ngIf="image?.base64String" [src]="getBase64Image()" />
           </picture>
         </ion-thumbnail>
         <!-- <ion-label>
           <p>Button on right</p>
         </ion-label> -->
-        <ion-button fill="outline" color="allorah" slot="start" (click)="photoPicker()">{{ image ? 'Change Image' :
+        <ion-button *ngIf="!isEdit" fill="outline" color="allorah" slot="start" (click)="photoPicker()">{{ image ? 'Change Image' :
           'Upload Image' }}</ion-button>
+          <a *ngIf="isEdit" fill="outline" color="allorah" slot="start" [href]="item.imageUrl">Download</a>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Description</ion-label>
@@ -44,11 +46,12 @@
           <ion-select-option *ngFor="let aval of availability" [value]="aval">{{ aval }}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item *ngIf="!isEdit">
-        <ion-buttons slot="end">
-          <ion-button color="allorah" fill="solid" (click)="addNewItem()"> Add Item </ion-button>
-        </ion-buttons>
-      </ion-item>
+
+      <ion-row *ngIf="!isEdit">
+        <ion-col>
+          <ion-button expand="block" color="success" (click)="addNewItem()"> Add Item </ion-button>
+      </ion-col>
+      </ion-row>
     </ion-list>
 
   </ion-card-header>
