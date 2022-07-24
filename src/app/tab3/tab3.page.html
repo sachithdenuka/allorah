@@ -17,8 +17,8 @@
           <img src={{item.imageUrl}} />
         </ion-thumbnail>
         <ion-label>
-          <h2>{{ item.description }}</h2>
-          <h3>{{ item.category}}</h3>
+          <h1>{{ item.description }}</h1>
+          <h2>{{ item.category}}</h2>
         </ion-label>
         <ion-badge slot="end"
           [color]="item.availability === 1 ? 'danger' : (item.availability === 2 ? 'warning' : 'success')">{{
